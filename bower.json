@@ -1,10 +1,10 @@
 {
   "name": "things-setting",
-  "version": "1.0.7",
+  "version": "0.0.1",
   "authors": [
-    "Anonymous <anonymous@example.com>"
+    "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
-  "description": "An element providing a solution to no problem in particular.",
+  "description": "An element providing badge button.",
   "keywords": [
     "web-component",
     "polymer",
@@ -12,16 +12,25 @@
   ],
   "main": "things-setting.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "homepage": "https://github.com/ThingsElements/seed-element/",
   "ignore": [
     "/.*",
     "/test/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.2.0"
+    "polymer": "Polymer/polymer#^1.2.0",
+    "iron-localstorage": "^1.0.5",
+    "things-msg-box-behavior": "ThingsElements/things-msg-box-behavior#^0.0.1",
+    "things-global-behavior": "ThingsElements/things-global-behavior#^0.0.2",
+    "paper-dialog-behavior": "^1.2.5",
+    "paper-input": "^1.1.11"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "^4.0.0"
+    "web-component-tester": "^4.0.0",
+    "iron-demo-helpers": "^1.2.3",
+    "paper-material": "^1.0.6",
+    "things-button": "ThingsElements/things-button#^0.0.1",
+    "paper-styles": "^1.1.4"
   }
 }
