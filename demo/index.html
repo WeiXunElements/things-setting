@@ -22,6 +22,9 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
   <link rel="import" href="../../polymer/polymer.html">
   <link rel="import" href="../../paper-material/paper-material.html">
   <link rel="import" href="../../things-button/things-button.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../things-global-behavior/things-global-behavior.html">
   <link rel="import" href="../things-setting.html">
 
   <link rel="stylesheet" href="../../paper-styles/demo.css">
@@ -62,42 +65,45 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
 
 </head>
 <body unresolved>
+  <p class="paper-font-subhead">Things spinner</p>
+  <demo-snippet class="centered-demo">
+    <template>
+      <template is="dom-bind">
+        <section onclick="clickSetting(event)">
 
-  <template is="dom-bind">
-    <section onclick="clickSetting(event)">
+          <h3>Setting</h3>
 
-      <h3>Setting</h3>
+          <paper-material class="Page-paper" elevation="1">
+            <things-setting id="setting"></things-setting>
 
-      <paper-material class="Page-paper" elevation="1">
-        <things-setting id="setting"></things-setting>
+            <div class="buttons">
+              <things-button color="green" target-id="setting">Setting</things-button>
+            </div>
+          </paper-material>
 
-        <div class="buttons">
-          <things-button color="green" target-id="setting">Setting</things-button>
-        </div>
-      </paper-material>
+        </section>
+      </template>
+      <script>
+        function clickSetting(e) {
+          var button = e.target;
+          while (!button.hasAttribute('target-id') && button !== document.body) {
+            button = button.parentElement;
+          }
 
-    </section>
-  </template>
+          if (!button.hasAttribute('target-id')) {
+            return;
+          }
 
-  <script>
-    function clickSetting(e) {
-      var button = e.target;
-      while (!button.hasAttribute('target-id') && button !== document.body) {
-        button = button.parentElement;
-      }
+          var id = button.getAttribute('target-id');
+          var dialog = document.getElementById(id);
 
-      if (!button.hasAttribute('target-id')) {
-        return;
-      }
-
-      var id = button.getAttribute('target-id');
-      var dialog = document.getElementById(id);
-
-      if (dialog) {
-        dialog.open();
-      }
-    }
-  </script>
+          if (dialog) {
+            dialog.open();
+          }
+        }
+      </script>
+    </template>
+  </demo-snippet>
 
 </body>
 </html>

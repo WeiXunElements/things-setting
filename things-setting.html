@@ -3,6 +3,8 @@
 
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
+<link rel="import" href="../things-combo/things-locale-combo.html">
+
 <link rel="import" href="things-setting-dialog.html">
 
 <!--
@@ -21,7 +23,15 @@
 <dom-module id="things-setting">
   <template>
 
-    <things-setting-dialog id="dialog"></things-setting-dialog>
+    <things-setting-dialog id="dialog" base-url="{{globals.baseUrl}}">
+          <!-- locale selector -->
+          <things-locale-combo 
+            id="locale-selector" 
+            setting
+            storage-name="setting.locale" 
+            default-locale ="{{globals.locale}}">
+          </things-locale-combo>
+    </things-setting-dialog>
 
     <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}"
                        on-iron-localstorage-load-empty="onBaseUrlEmpty">
