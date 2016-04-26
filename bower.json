@@ -20,8 +20,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "iron-localstorage": "^1.0.5",
-    "things-msg-box-behavior": "ThingsElements/things-msg-box-behavior#^0.0.1",
-    "things-global-behavior": "ThingsElements/things-global-behavior#^0.0.2",
+    "things-msg-box-behavior": "ThingsElements/things-msg-box-behavior",
+    "things-global-behavior": "ThingsElements/things-global-behavior",
     "paper-dialog-behavior": "^1.2.5",
     "paper-input": "^1.1.11"
   },
@@ -30,7 +30,7 @@
     "web-component-tester": "^4.0.0",
     "iron-demo-helpers": "^1.2.3",
     "paper-material": "^1.0.6",
-    "things-button": "ThingsElements/things-button#^0.0.1",
+    "things-button": "ThingsElements/things-button",
     "paper-styles": "^1.1.4"
   }
 }
