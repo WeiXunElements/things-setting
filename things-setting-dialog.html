@@ -4,33 +4,37 @@
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-shared-styles.html">
 
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
+<link rel="import" href="../things-i18n/things-i18n-msg.html">
+<link rel="import" href="../things-resource-combo/things-locale-combo.html">
 
 <dom-module id="things-setting-dialog">
   <template>
     <style include="paper-dialog-shared-styles"></style>
 
-    <h2>Setting (Only Client Side Setting)</h2>
+    <h2><things-i18n-msg auto msgid="button.setting"></things-i18n-msg> (Only Client Side Setting)</h2>
 
     <!-- Base URL -->
     <paper-input 
       label="Base URL (ex: http://www.elidom.xyz:80/rest)" 
-      value="{{baseUrl::change}}" autoValidate required>
+      value="{{globals.baseUrl::change}}" autoValidate required>
     </paper-input>
-    <content></content>
+
+    <!-- locale selector -->
+    <things-locale-combo 
+      id="locale-selector" 
+      storage-name="setting.locale" 
+      default-locale ="{{globals.locale}}"
+      selected-locale ="{{globals.locale}}">
+    </things-locale-combo>
   </template>
 
   <script>
     Polymer({
       is: 'things-setting-dialog',
-      properties:{
-        baseUrl :{
-          type:String,
-          notify:true
-        }
-      },
 
       behaviors: [
-        Polymer.PaperDialogBehavior 
+        Polymer.PaperDialogBehavior, 
+        Things.GlobalBehavior
       ]
     });
   </script>
