@@ -24,8 +24,8 @@
     "things-global-behavior": "ThingsElements/things-global-behavior",
     "paper-dialog-behavior": "^1.2.5",
     "paper-input": "^1.1.11",
-    "things-resource-combo": "ThingsElements/things-resource-combo#^0.0.13",
-    "things-i18n-msg": "ThingsElements/things-i18n-msg#^0.0.13"
+    "things-resource-combo": "ThingsElements/things-resource-combo",
+    "things-i18n-msg": "ThingsElements/things-i18n-msg"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
