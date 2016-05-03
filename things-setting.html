@@ -4,6 +4,8 @@
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="./things-setting-dialog.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 
 <!--
 `<things-setting>` Global 설정 관리 
@@ -22,7 +24,11 @@
   <template>
 
     <things-setting-dialog id="dialog"></things-setting-dialog>
+    <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
 
+    <paper-tooltip for="setting-toggler">
+      <things-i18n-msg msgid="button.setting" auto>Setting</things-i18n-msg>
+    </paper-tooltip>
     <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}"
                        on-iron-localstorage-load-empty="onBaseUrlEmpty">
     </iron-localstorage>
@@ -55,42 +61,6 @@
           defaultLocale: {
             type: String,
             value: 'en-US'
-          },
-
-          /**
-           * 용어 호출 URL
-           */
-          termUrl: {
-            type: String,
-            value: 'terminologies/resource'
-          }
-        },
-
-        ready:  function ( ) {
-          this.globals.locale = this.globals.locale||this.defaultLocale;
-
-          if(this.globals.baseUrl&&this.termUrl&&this.globals.locale&&this.globals.user)
-            this.initializeSettings(this.globals.baseUrl, this.termUrl, this.globals.locale, this.globals.user)
-        },
-        /**
-         * baseUrl, termUrl, locale 그리고 user 정보가 설정이 되는 순간 필요한 세팅 초기화를 한다.
-         *
-         * @param {String} baseUrl
-         * @param {String} termUrl
-         * @param {String} locale
-         * @param {Object} user
-         */
-        initializeSettings: function(baseUrl, termUrl, locale, user) {
-          if(!Things.DataGlobal.fetchedLang) {
-            this._initializeI18n(baseUrl, termUrl, locale, user);
-
-          } else if(Things.DataGlobal.fetchedLang != 'loading') {
-            if(!Things.DataGlobal.locales[locale]) {
-              this._initializeI18n(baseUrl, termUrl, locale, user);  
-            } else {
-              var event = new CustomEvent('things-i18n-ready', { language: locale });
-              document.dispatchEvent(event);              
-            }
           }
         },
 
@@ -114,52 +84,6 @@
          */
         open: function() {
           this.$.dialog.open()
-        },
-
-        /**
-         * baseUrl, termUrl, locale 그리고 user 정보로 부터 Request를 설정하여 i18n 메시지를 서버에 요청하여 초기화한다.
-         * i18n 데이터를 응답받아서 window 변수인 Things.DataGlobal.locales에 정보를 저장한다.
-         *
-         * @param {String} baseUrl
-         * @param {String} termUrl
-         * @param {String} locale
-         * @param {Object} user
-         */
-        _initializeI18n: function(baseUrl, termUrl, locale, user) {
-          Things.DataGlobal.fetchedLang = 'loading';
-
-          // 1. create xhr request by synchronous
-          var url = [baseUrl, termUrl, locale].join('/') + '.json';
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', url, false);
-          xhr.setRequestHeader("Content-type", "application/json");
-          xhr.withCredentials = true;
-
-          // 2. add response event
-          xhr.onload = function(e) {
-            if (e.target.status !== 200 && e.target.status !== 0) {
-              Things.DataGlobal.fetchedLang = 'not-yet';
-              this.fire('things-i18n-load-failure', e.target);
-            } else {
-              var resp = JSON.parse(e.target.response)[locale];
-              if(!Things.DataGlobal.locales) Things.DataGlobal.locales = {};
-              Things.DataGlobal.locales[locale] = resp;
-              Things.DataGlobal.fetchedLang = 'completed';
-
-              var event = new CustomEvent('things-i18n-ready', { language: locale });
-              document.dispatchEvent(event);
-            }
-          }.bind(this);
-
-          // 3. add error event
-          xhr.onerror = function(e) {
-            Things.DataGlobal.fetchedLang = 'not-yet';
-            this.fire('i18n-load-error', e.target);
-          };
-
-          // 4. make domain object and send request
-          var requestValue = { domain: user ? user.domain_id : '1' , locale : locale };
-          xhr.send(JSON.stringify(requestValue));
         }
 
       });
