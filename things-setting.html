@@ -66,10 +66,12 @@
           }
         },
 
-        observers: [
-          'initializeSettings(globals.baseUrl, termUrl, globals.locale, globals.user)'
-        ],
+        ready:  function ( ) {
+          this.globals.locale = this.globals.locale||this.defaultLocale;
 
+          if(this.globals.baseUrl&&this.termUrl&&this.globals.locale&&this.globals.user)
+            this.initializeSettings(this.globals.baseUrl, this.termUrl, this.globals.locale, this.globals.user)
+        },
         /**
          * baseUrl, termUrl, locale 그리고 user 정보가 설정이 되는 순간 필요한 세팅 초기화를 한다.
          *
@@ -125,11 +127,6 @@
          */
         _initializeI18n: function(baseUrl, termUrl, locale, user) {
           Things.DataGlobal.fetchedLang = 'loading';
-
-          if(!locale) {
-            locale = this.defaultLocale;
-            this.set('globals.locale', locale);
-          }
 
           // 1. create xhr request by synchronous
           var url = [baseUrl, termUrl, locale].join('/') + '.json';
