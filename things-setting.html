@@ -22,6 +22,13 @@
 -->
 <dom-module id="things-setting">
   <template>
+    <style>
+      paper-icon-button{
+        @apply(--things-small-icon);
+        float:right;
+        margin-top:1px;margin-right:22px;
+      }
+    </style>
 
     <things-setting-dialog id="dialog"></things-setting-dialog>
     <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
