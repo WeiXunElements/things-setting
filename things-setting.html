@@ -1,11 +1,12 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
-
-<link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
-<link rel="import" href="../things-global-behavior/things-global-behavior.html">
-<link rel="import" href="./things-setting-dialog.html">
-<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../things-global-behavior/things-global-behavior.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
+
+<link rel="import" href="./things-setting-dialog.html">
 
 <!--
 `<things-setting>` Global 설정 관리 
@@ -23,77 +24,74 @@
 <dom-module id="things-setting">
   <template>
     <style>
-      paper-icon-button{
+      paper-icon-button {
         @apply(--things-small-icon);
         float:right;
         margin-top:1px;margin-right:22px;
       }
     </style>
 
+    <!-- setting dialog -->
     <things-setting-dialog id="dialog"></things-setting-dialog>
+
+    <!-- setting icon -->
     <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
 
+    <!-- tooltip of setting icon -->
     <paper-tooltip for="setting-toggler">
       <things-i18n-msg msgid="button.setting" auto>Setting</things-i18n-msg>
     </paper-tooltip>
+
+    <!-- Local storages -->
     <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}"
                        on-iron-localstorage-load-empty="onBaseUrlEmpty">
     </iron-localstorage>
-
     <iron-localstorage name="setting.user" value="{{globals.user}}">
     </iron-localstorage>
-
     <iron-localstorage name="setting.locale" value="{{globals.locale}}">
     </iron-localstorage>
-
   </template>
 
   <script>
-    (function() {
-      'use strict';
+    Polymer({
+      is: 'things-setting',
 
-      Polymer({
-        is: 'things-setting',
+      behaviors: [
+        Things.GlobalBehavior,
+        Things.MsgBoxBehavior
+      ],
 
-        behaviors: [
-          Things.GlobalBehavior,
-          Things.MsgBoxBehavior
-        ],
-
-        properties: {
-
-          /**
-           * 기본 Language가 설정되지 않았을 경우 defaultLanguage를 설정한다.
-           */
-          defaultLocale: {
-            type: String,
-            value: 'en-US'
-          }
-        },
-
+      properties: {
         /**
-         * global 변수 이름으로 값을 찾는다.
+         * 기본 Language가 설정되지 않았을 경우 defaultLanguage를 설정한다.
          */
-        getGlobalValue: function(name) {
-          return this.get('globals.' + name);
-        },
-
-        /**
-         * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
-         */
-        onBaseUrlEmpty: function() {
-          this.openInfoMsg('Base URL should not be empty! Please set the Base URL');
-          this.open();
-        },
-
-        /**
-         * Setting Dialog를 오픈한다.
-         */
-        open: function() {
-          this.$.dialog.open()
+        defaultLocale: {
+          type: String,
+          value: 'en-US'
         }
+      },
 
-      });
-    })();
+      /**
+       * global 변수 이름으로 값을 찾는다.
+       */
+      getGlobalValue: function(name) {
+        return this.get('globals.' + name);
+      },
+
+      /**
+       * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
+       */
+      onBaseUrlEmpty: function() {
+        this.openInfoMsg('Base URL should not be empty! Please set the Base URL');
+        this.open();
+      },
+
+      /**
+       * Setting Dialog를 오픈한다.
+       */
+      open: function() {
+        this.$.dialog.open()
+      }
+    });
   </script>
 </dom-module>
