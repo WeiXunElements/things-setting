@@ -1,6 +1,6 @@
 {
   "name": "things-setting",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -23,6 +23,7 @@
     "things-msg-box-behavior": "ThingsElements/things-msg-box-behavior",
     "things-global-behavior": "ThingsElements/things-global-behavior",
     "paper-dialog-behavior": "^1.2.5",
+    "paper-tooltip":"^1.1.2",
     "paper-input": "^1.1.11",
     "things-resource-combo": "ThingsElements/things-resource-combo",
     "things-i18n-msg": "ThingsElements/things-i18n-msg"
