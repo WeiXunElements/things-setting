@@ -44,13 +44,11 @@
     </paper-tooltip>
 
     <!-- Local storages -->
-    <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}"
-                       on-iron-localstorage-load-empty="onBaseUrlEmpty">
-    </iron-localstorage>
-    <iron-localstorage name="setting.user" value="{{globals.user}}">
-    </iron-localstorage>
-    <iron-localstorage name="setting.locale" value="{{globals.locale}}">
-    </iron-localstorage>
+    <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}" on-iron-localstorage-load-empty="onBaseUrlEmpty"></iron-localstorage>
+    <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load-empty="onWsUrlEmpty"></iron-localstorage>
+    <iron-localstorage name="setting.user" value="{{globals.user}}"></iron-localstorage>
+    <iron-localstorage name="setting.locale" value="{{globals.locale}}"></iron-localstorage>
+
   </template>
 
   <script>
@@ -84,6 +82,11 @@
        */
       onBaseUrlEmpty: function() {
         this.openInfoMsg('Base URL should not be empty! Please set the Base URL');
+        this.open();
+      },
+
+      onWsUrlEmpty: function() {
+        this.openInfoMsg('Web Socket URL should not be empty! Please set the Web Socket URL')
         this.open();
       },
 
