@@ -81,13 +81,23 @@
        * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
        */
       onBaseUrlEmpty: function() {
-        this.openInfoMsg('Base URL should not be empty! Please set the Base URL');
-        this.open();
+        var me = this;
+        this.openConfirmMsg({
+          title: 'Base URL is Empty',
+          text: 'Base URL should not be empty! Please set the Base URL'
+        }, function() {
+          me.open();
+        });
       },
 
       onWsUrlEmpty: function() {
-        this.openInfoMsg('Web Socket URL should not be empty! Please set the Web Socket URL')
-        this.open();
+        var me = this;
+        this.openConfirmMsg({
+          title: 'Web Socket URL is Empty',
+          text: 'Web Socket URL should not be empty! Please set the Web Socket URL'
+        }, function() {
+          me.open();
+        });
       },
 
       /**
