@@ -6,6 +6,7 @@
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 <link rel="import" href="../things-resource-combo/things-locale-combo.html">
+<link rel="import" href="../things-resource-combo/things-menu-combo.html">
 
 <dom-module id="things-setting-dialog">
   <template>
@@ -34,6 +35,7 @@
       selected-locale ="{{globals.locale}}">
     </things-locale-combo>
 
+    <!-- default screen selector -->
     <things-menu-combo
       id="default-page-selector"
       storage-name="setting.defaultScreen"
