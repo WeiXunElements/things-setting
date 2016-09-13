@@ -2,6 +2,7 @@
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
 
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
@@ -10,9 +11,32 @@
 
 <dom-module id="things-setting-dialog">
   <template>
-    <style include="paper-dialog-shared-styles"></style>
+    <style include="paper-dialog-shared-styles">
+    h2{
+      padding-top:20px;
+      text-transform: capitalize;
+    }
+    paper-button{
+      @apply(--things-button)
+    }
+    paper-button[autofocus]{
+      @apply(--things-button-important)
+    }
+    .half-width{
+      min-width:35% !important;
+    }
+    .buttons{
+      padding-right:20px
+    }
+    </style>      
+    </style>
 
-    <h2><things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg> (Only Client Side Setting)</h2>
+    <things-i18n-msg msgid="title.recent_page" msg="{{tRecentPage}}" auto hidden>Recent Page</things-i18n-msg>
+    <things-i18n-msg msgid="label.use" msg="{{lUse}}" auto hidden>Use</things-i18n-msg>
+    <things-i18n-msg msgid="label.nonuse" msg="{{lNonuse}}" auto hidden>Nonuse</things-i18n-msg>
+
+
+    <h2><things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg></h2>
 
     <!-- Base URL -->
     <paper-input 
@@ -40,7 +64,20 @@
       id="default-page-selector"
       storage-name="setting.defaultScreen"
       default-screen="{{globals.defaultScreen}}">
-    </things-menu-combo>  
+    </things-menu-combo>
+
+    <things-tristate-radio
+      label="[[tRecentPage]]"
+      yes-msg="[[lUse]]"
+      no-msg="[[lNonuse]]"
+      value="{{useRecentPages}}">
+    </things-tristate-radio>
+
+    <div class="buttons">
+      <paper-button dialog-confirm autofocus><things-i18n-msg msgid="button.confirm" auto>Confirm</things-i18n-msg></paper-button>
+    </div>
+
+    <iron-localstorage name="setting.useRecentPages" value="{{useRecentPages}}"></iron-localstorage>
   </template>
 
   <script>

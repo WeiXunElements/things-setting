@@ -33,7 +33,7 @@
     </style>
 
     <!-- setting dialog -->
-    <things-setting-dialog id="dialog"></things-setting-dialog>
+    <things-setting-dialog id="dialog" no-cancel-on-outside-click with-backdrop></things-setting-dialog>
 
     <!-- setting icon -->
     <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
@@ -49,7 +49,6 @@
     <iron-localstorage name="setting.user" value="{{globals.user}}"></iron-localstorage>
     <iron-localstorage name="setting.locale" value="{{globals.locale}}"></iron-localstorage>
     <iron-localstorage name="setting.defaultScreen" value="{{globals.defaultScreen}}"></iron-localstorage>
-
   </template>
 
   <script>
