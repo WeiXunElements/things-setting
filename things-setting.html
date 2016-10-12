@@ -74,7 +74,7 @@
       },
 
       /**
-       * global 변수 이름으로 값을 찾는다.
+       * Global 변수 이름으로 값을 찾는다.
        */
       getGlobalValue: function(name) {
         return this.get('globals.' + name);
@@ -84,13 +84,8 @@
        * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
        */
       onBaseUrlEmpty: function() {
-        var me = this;
-        this.openConfirmMsg({
-          title: 'Base URL is Empty',
-          text: 'Base URL should not be empty! Please set the Base URL'
-        }, function() {
-          me.open();
-        });
+        this.set('globals.baseUrl', location.origin + '/rest');
+        this.open();
       },
 
       onWsUrlEmpty: function() {
