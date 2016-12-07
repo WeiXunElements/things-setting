@@ -49,9 +49,10 @@
     <!-- Local storages -->
     <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}" on-iron-localstorage-load-empty="onBaseUrlEmpty"></iron-localstorage>
     <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load-empty="onWsUrlEmpty"></iron-localstorage>
-    <iron-localstorage name="setting.user" value="{{globals.user}}"></iron-localstorage>
+    <iron-localstorage name="setting.user" value="{{globals.user}}" 
+                       on-iron-localstorage-load-empty="onUserEmpty">
+    </iron-localstorage>
     <iron-localstorage name="setting.locale" value="{{globals.locale}}"></iron-localstorage>
-<!--     <iron-localstorage name="setting.defaultScreen" value="{{globals.defaultScreen}}"></iron-localstorage> -->
   </template>
 
   <script>
@@ -72,7 +73,6 @@
           value: 'en-US'
         }
       },
-
       /**
        * Global 변수 이름으로 값을 찾는다.
        */
@@ -88,6 +88,15 @@
         this.open();
       },
 
+      onUserEmpty: function(){
+        if(Things.componentsReady){
+          this.handleUnauthorized('user is null');
+        }else{
+          window.addEventListener('WebComponentsReady', function() {
+            this.handleUnauthorized('user is null');
+          }.bind(this));
+        }
+      },
       onWsUrlEmpty: function() {
         var me = this;
         this.openConfirmMsg({
@@ -97,7 +106,6 @@
           me.open();
         });
       },
-
       /**
        * Setting Dialog를 오픈한다.
        */
