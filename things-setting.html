@@ -36,7 +36,7 @@
     </style>
 
     <!-- setting dialog -->
-    <things-setting-dialog id="dialog" no-cancel-on-outside-click></things-setting-dialog>
+    <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]"></things-setting-dialog>
 
     <!-- setting icon -->
     <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
@@ -47,12 +47,11 @@
     </paper-tooltip>
 
     <!-- Local storages -->
-    <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}" on-iron-localstorage-load-empty="onBaseUrlEmpty"></iron-localstorage>
-    <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load-empty="onWsUrlEmpty"></iron-localstorage>
-    <iron-localstorage name="setting.user" value="{{globals.user}}" 
-                       on-iron-localstorage-load-empty="onUserEmpty">
+    <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}" on-iron-localstorage-load="_onBaseUrlLoad" on-iron-localstorage-load-empty="_onBaseUrlEmpty"></iron-localstorage>
+    <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load="_onWsUrlLoad" on-iron-localstorage-load-empty="_onWsUrlEmpty"></iron-localstorage>
+    <iron-localstorage name="setting.user" value="{{globals.user}}" on-iron-localstorage-load-empty="_onUserEmpty">
     </iron-localstorage>
-    <iron-localstorage name="setting.locale" value="{{globals.locale}}"></iron-localstorage>
+    <iron-localstorage name="setting.locale" value="{{globals.locale}}" on-iron-localstorage-load-empty="_onLocaleEmpty"></iron-localstorage>
   </template>
 
   <script>
@@ -73,22 +72,44 @@
           value: 'en-US'
         }
       },
+      ready: function(){
+        this.devMode = location.href.indexOf('localhost')>=0;
+      },
+      observers:[
+        'baseUrlChange(globals.baseUrl)'
+      ],
+      baseUrlChange: function(){
+        // console.log(this.globals.baseUrl);
+      },
       /**
        * Global 변수 이름으로 값을 찾는다.
        */
       getGlobalValue: function(name) {
         return this.get('globals.' + name);
       },
-
+      /**
+       * When load base url check it is '' or not
+       */
+      _onBaseUrlLoad: function(){
+        if(this.globals.baseUrl=='')this.set('globals.baseUrl', location.origin + '/rest');
+      },
+      /**
+       * When load ws url check it is '' or not
+       */
+      _onWsUrlLoad: function(){
+        if(this.globals.wsUrl=='')this.set('globals.wsUrl', location.origin + '/elidom/stomp');
+      },
       /**
        * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
        */
-      onBaseUrlEmpty: function() {
+      _onBaseUrlEmpty: function() {
         this.set('globals.baseUrl', location.origin + '/rest');
-        this.open();
+        if(this.devMode){
+          this.open();
+        }
       },
 
-      onUserEmpty: function(){
+      _onUserEmpty: function(event){
         if(Things.componentsReady){
           this.handleUnauthorized('user is null');
         }else{
@@ -97,14 +118,14 @@
           }.bind(this));
         }
       },
-      onWsUrlEmpty: function() {
-        var me = this;
-        this.openConfirmMsg({
-          title: 'Web Socket URL is Empty',
-          text: 'Web Socket URL should not be empty! Please set the Web Socket URL'
-        }, function() {
-          me.open();
-        });
+      _onWsUrlEmpty: function() {
+        this.set('globals.wsUrl', location.origin + '/elidom/stomp');
+        if(this.devMode){
+          this.open();
+        }
+      },
+      _onLocaleEmpty: function(event){
+        this.globals.locale = 'ko-KR';
       },
       /**
        * Setting Dialog를 오픈한다.

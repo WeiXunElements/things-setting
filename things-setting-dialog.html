@@ -28,61 +28,44 @@
     .buttons{
       padding-right:20px
     }
-    </style>      
     </style>
 
-    <things-i18n-msg msgid="title.recent_page" msg="{{tRecentPage}}" auto hidden>Recent Page</things-i18n-msg>
-    <things-i18n-msg msgid="label.use" msg="{{lUse}}" auto hidden>Use</things-i18n-msg>
-    <things-i18n-msg msgid="label.nonuse" msg="{{lNonuse}}" auto hidden>Nonuse</things-i18n-msg>
-
-
     <h2><things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg></h2>
-
     <!-- Base URL -->
     <paper-input 
-      label="Base URL (ex: http://www.elidom.xyz:80/rest)" 
-      value="{{globals.baseUrl::change}}" autoValidate required>
+      label="Base URL (ex: http://www.elidom.xyz/rest)" 
+      value="{{globals.baseUrl::change}}" autoValidate required hidden$=[[!devMode]]>
     </paper-input>
 
     <!-- Web Socket URL -->
     <paper-input
       id="ws-url"
       label="Web Socket URL"
-      value="{{globals.wsUrl::change}}">
+      value="{{globals.wsUrl::change}}" hidden$=[[!devMode]]>
     </paper-input>
 
     <!-- locale selector -->
     <things-locale-combo 
       id="locale-selector" 
       storage-name="setting.locale" 
-      default-locale ="en-US"
+      default-locale ="ko-KR"
       selected-locale ="{{globals.locale}}">
     </things-locale-combo>
-
-    <!-- default screen selector -->
-<!--     <things-menu-combo
-      id="default-page-selector"
-      storage-name="setting.defaultScreen"
-      default-screen="{{globals.defaultScreen}}">
-    </things-menu-combo> -->
-
-    <things-tristate-radio
-      label="[[tRecentPage]]"
-      yes-msg="[[lUse]]"
-      no-msg="[[lNonuse]]"
-      value="{{useRecentPages}}">
-    </things-tristate-radio>
 
     <div class="buttons">
       <paper-button dialog-confirm autofocus><things-i18n-msg msgid="button.confirm" auto>Confirm</things-i18n-msg></paper-button>
     </div>
-
-    <iron-localstorage name="setting.useRecentPages" value="{{useRecentPages}}"></iron-localstorage>
   </template>
 
   <script>
     Polymer({
       is: 'things-setting-dialog',
+      properties:{
+        devMode:{
+          type: Boolean,
+          value: false
+        }
+      },
 
       behaviors: [
         Polymer.PaperDialogBehavior, 
