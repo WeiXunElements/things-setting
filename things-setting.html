@@ -125,7 +125,17 @@
         }
       },
       _onLocaleEmpty: function(event){
-        this.globals.locale = 'ko-KR';
+        var language = navigator.language;
+        if(language.indexOf('ko') >= 0) {
+          this.globals.locale = 'ko-KR';
+        } else if (language.indexOf('en') >= 0) {
+          this.globals.locale = 'en-US';
+        } else if (language.indexOf('zh') >= 0) {
+          this.globals.locale = 'zh-CN';
+        } else {
+          this.globals.locale = 'en-US';
+        }
+        
       },
       /**
        * Setting Dialog를 오픈한다.
