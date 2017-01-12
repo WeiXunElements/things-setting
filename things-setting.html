@@ -51,7 +51,7 @@
     <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load="_onWsUrlLoad" on-iron-localstorage-load-empty="_onWsUrlEmpty"></iron-localstorage>
     <iron-localstorage name="setting.user" value="{{globals.user}}" on-iron-localstorage-load-empty="_onUserEmpty">
     </iron-localstorage>
-    <iron-localstorage name="setting.locale" value="{{globals.locale}}" on-iron-localstorage-load-empty="_onLocaleEmpty"></iron-localstorage>
+    <!-- <iron-localstorage name="setting.locale" value="{{globals.locale}}" on-iron-localstorage-load-empty="_onLocaleEmpty"></iron-localstorage> -->
   </template>
 
   <script>
@@ -124,19 +124,19 @@
           this.open();
         }
       },
-      _onLocaleEmpty: function(event){
-        var language = navigator.language;
-        if(language.indexOf('ko') >= 0) {
-          this.globals.locale = 'ko-KR';
-        } else if (language.indexOf('en') >= 0) {
-          this.globals.locale = 'en-US';
-        } else if (language.indexOf('zh') >= 0) {
-          this.globals.locale = 'zh-CN';
-        } else {
-          this.globals.locale = 'en-US';
-        }
+      // _onLocaleEmpty: function(event){
+      //   var language = navigator.language;
+      //   if(language.indexOf('ko') >= 0) {
+      //     this.globals.locale = 'ko-KR';
+      //   } else if (language.indexOf('en') >= 0) {
+      //     this.globals.locale = 'en-US';
+      //   } else if (language.indexOf('zh') >= 0) {
+      //     this.globals.locale = 'zh-CN';
+      //   } else {
+      //     this.globals.locale = 'en-US';
+      //   }
         
-      },
+      // },
       /**
        * Setting Dialog를 오픈한다.
        */
