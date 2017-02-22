@@ -37,7 +37,13 @@
 
     <!-- setting dialog -->
     <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]"></things-setting-dialog>
-
+    <!-- get session -->
+    <things-ajax
+      id="current-user"
+      resource-url="session_info"
+      method="get"
+      last-response="{{globals.user}}">
+    </things-ajax>
     <!-- setting icon -->
     <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
 
@@ -110,13 +116,7 @@
       },
 
       _onUserEmpty: function(event){
-        if(Things.componentsReady){
-          this.handleUnauthorized('user is null');
-        }else{
-          window.addEventListener('WebComponentsReady', function() {
-            this.handleUnauthorized('user is null');
-          }.bind(this));
-        }
+        this.$['current-user'].generateRequest();
       },
       _onWsUrlEmpty: function() {
         this.set('globals.wsUrl', location.origin + '/elidom/stomp');
