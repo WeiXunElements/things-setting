@@ -10,7 +10,7 @@
 <link rel="import" href="./things-setting-dialog.html">
 
 <!--
-`<things-setting>` Global 설정 관리 
+`<things-setting>` Global 설정 관리
 
   Example
 
@@ -32,7 +32,7 @@
       }
       things-setting-dialog {
         min-width:500px;
-      }      
+      }
     </style>
 
     <!-- setting dialog -->
@@ -72,6 +72,8 @@
       properties: {
         /**
          * 기본 Language가 설정되지 않았을 경우 defaultLanguage를 설정한다.
+         * ********
+         * @type {String}
          */
         defaultLocale: {
           type: String,
@@ -89,12 +91,14 @@
       },
       /**
        * Global 변수 이름으로 값을 찾는다.
+       * *******
        */
       getGlobalValue: function(name) {
         return this.get('globals.' + name);
       },
       /**
        * When load base url check it is '' or not
+       * *******
        */
       _onBaseUrlLoad: function(){
         if(this.globals.baseUrl=='')this.set('globals.baseUrl', location.origin + '/rest');
@@ -135,10 +139,11 @@
       //   } else {
       //     this.globals.locale = 'en-US';
       //   }
-        
+
       // },
       /**
        * Setting Dialog를 오픈한다.
+       * *******
        */
       open: function() {
         this.$.dialog.open()

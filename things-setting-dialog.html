@@ -32,8 +32,8 @@
 
     <h2><things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg></h2>
     <!-- Base URL -->
-    <paper-input 
-      label="Base URL (ex: http://www.elidom.xyz/rest)" 
+    <paper-input
+      label="Base URL (ex: http://www.elidom.xyz/rest)"
       value="{{globals.baseUrl::change}}" autoValidate required hidden$=[[!devMode]]>
     </paper-input>
 
@@ -45,9 +45,9 @@
     </paper-input>
 
     <!-- locale selector -->
-    <!--things-locale-combo 
-      id="locale-selector" 
-      storage-name="setting.locale" 
+    <!--things-locale-combo
+      id="locale-selector"
+      storage-name="setting.locale"
       default-locale="{{defaultLocale}}"
       selected-locale="{{globals.locale}}">
     </things-locale-combo-->
@@ -61,6 +61,11 @@
     Polymer({
       is: 'things-setting-dialog',
       properties:{
+        /**
+         * devMode
+         * ******
+         * @type {Boolean}
+         */
         devMode:{
           type: Boolean,
           value: false
@@ -84,7 +89,7 @@
       },
 
       behaviors: [
-        Polymer.PaperDialogBehavior, 
+        Polymer.PaperDialogBehavior,
         Things.GlobalBehavior
       ]
     });
