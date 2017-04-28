@@ -36,7 +36,10 @@
     </style>
 
     <!-- setting dialog -->
-    <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]"></things-setting-dialog>
+    <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]">
+      <!-- lite dom -->
+      <content></content>
+    </things-setting-dialog>
     <!-- get session -->
     <things-ajax
       id="current-user"
@@ -127,6 +130,9 @@
         if(this.devMode){
           this.open();
         }
+      },
+      _onAgentUrlEmpty: function(){
+        this.set('globals.printAgentUrl','http://localhost:9010');
       },
       // _onLocaleEmpty: function(event){
       //   var language = navigator.language;
