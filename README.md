@@ -1,6 +1,6 @@
 # things-setting
 
-## Global 설정을 load하고 global설정을 설정하는 dialog여는 컴포넌트
+## This is a component that extracts global variables from the browser repository and stores and modifies them in the browser repository.
 
 ###  Example
 ```html
@@ -13,13 +13,13 @@
 
 # things-setting-dialog
 
-## setting 정보를 다이어로그로 표현하는 컴포넌트
+## This is a component that presents the setting information in a dialogue.
 ```html
 <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]">
 </things-setting-dialog>
 ```
 
-devMode가 true인 경우 화면에 서버 baseUrl정보를 입력받는 input이 보여짐
+If devMode is true, the input which receives the server baseUrl information is shown on the screen.
 
 ```js
 this.$.dialog.open();
