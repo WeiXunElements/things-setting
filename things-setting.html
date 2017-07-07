@@ -16,148 +16,196 @@ Copyright © HatioLab Inc. All rights reserved.
 <!--
 `<things-setting>` Global 설정 관리
 
-  Example
+	Example
 
-    <things-setting id="setting"></things-setting>
+		<things-setting id="setting"></things-setting>
 
-    <div class="buttons">
-      <things-button color="green" target-id="setting">Setting</things-button>
-    </div>
+		<div class="buttons">
+			<things-button color="green" target-id="setting">Setting</things-button>
+		</div>
 
 @demo demo/index.html
 -->
 <dom-module id="things-setting">
-  <template>
-    <style>
-      paper-icon-button {
-        @apply(--things-small-icon);
-        float:right;
-        margin-top:1px;margin-right:22px;
-      }
-      things-setting-dialog {
-        min-width:500px;
-      }
-    </style>
+	<template>
+		<style>
+			paper-icon-button {
+				@apply(--things-small-icon);
+				float:right;
+				margin-top:1px;margin-right:22px;
+			}
+			things-setting-dialog {
+				min-width:500px;
+			}
+		</style>
 
-    <!-- setting dialog -->
-    <things-setting-dialog id="dialog" no-cancel-on-outside-click dev-mode="[[devMode]]">
-      <!-- lite dom -->
-      <content></content>
-    </things-setting-dialog>
-    <!-- get session -->
-    <things-ajax
-      id="current-user"
-      resource-url="session_info"
-      method="get"
-      last-response="{{globals.user}}">
-    </things-ajax>
-    <!-- setting icon -->
-    <paper-icon-button icon="icons:settings" id="setting-toggler" on-tap="open"></paper-icon-button>
+		<!-- setting dialog -->
+		<things-setting-dialog 
+			id="dialog" 
+			no-cancel-on-outside-click 
+			dev-mode="[[devMode]]"
+			license-ref-url="[[licenseRefUrl]]">
+			<!-- lite dom -->
+			<content></content>
+		</things-setting-dialog>
 
-    <!-- tooltip of setting icon -->
-    <paper-tooltip for="setting-toggler">
-      <things-i18n-msg msgid="button.setting" auto>Setting</things-i18n-msg>
-    </paper-tooltip>
+		<!-- get session -->
+		<things-ajax
+			id="current-user"
+			resource-url="session_info"
+			method="get"
+			last-response="{{globals.user}}">
+		</things-ajax>
+		
+		<!-- setting icon -->
+		<paper-icon-button 
+			icon="icons:settings" 
+			id="setting-toggler" 
+			on-tap="open">
+		</paper-icon-button>
 
-    <!-- Local storages -->
-    <iron-localstorage name="setting.baseUrl" value="{{globals.baseUrl}}" on-iron-localstorage-load="_onBaseUrlLoad" on-iron-localstorage-load-empty="_onBaseUrlEmpty"></iron-localstorage>
-    <iron-localstorage name="setting.wsUrl" value="{{globals.wsUrl}}" on-iron-localstorage-load="_onWsUrlLoad" on-iron-localstorage-load-empty="_onWsUrlEmpty"></iron-localstorage>
-    <iron-localstorage name="setting.user" value="{{globals.user}}" on-iron-localstorage-load-empty="_onUserEmpty">
-    </iron-localstorage>
-    <!-- <iron-localstorage name="setting.locale" value="{{globals.locale}}" on-iron-localstorage-load-empty="_onLocaleEmpty"></iron-localstorage> -->
-  </template>
+		<!-- tooltip of setting icon -->
+		<paper-tooltip for="setting-toggler">
+			<things-i18n-msg msgid="button.setting" auto>Setting</things-i18n-msg>
+		</paper-tooltip>
 
-  <script>
-    Polymer({
-      is: 'things-setting',
+		<!-- Local storages -->
+		<iron-localstorage 
+			name="setting.baseUrl" 
+			value="{{globals.baseUrl}}" 
+			on-iron-localstorage-load="_onBaseUrlLoad" 
+			on-iron-localstorage-load-empty="_onBaseUrlEmpty">
+		</iron-localstorage>
 
-      behaviors: [
-        Things.GlobalBehavior,
-        Things.MsgBoxBehavior
-      ],
+		<iron-localstorage 
+			name="setting.wsUrl" 
+			value="{{globals.wsUrl}}" 
+			on-iron-localstorage-load="_onWsUrlLoad" 
+			on-iron-localstorage-load-empty="_onWsUrlEmpty">
+		</iron-localstorage>
+		
+		<iron-localstorage 
+			name="setting.user" 
+			value="{{globals.user}}" 
+			on-iron-localstorage-load-empty="_onUserEmpty">
+		</iron-localstorage>
+	</template>
 
-      properties: {
-        /**
-         * 기본 Language가 설정되지 않았을 경우 defaultLanguage를 설정한다.
-         * ********
-         * @type {String}
-         */
-        defaultLocale: {
-          type: String,
-          value: 'en-US'
-        }
-      },
-      ready: function(){
-        this.devMode = location.href.indexOf('localhost')>=0;
-      },
-      observers:[
-        'baseUrlChange(globals.baseUrl)'
-      ],
-      baseUrlChange: function(){
-        // console.log(this.globals.baseUrl);
-      },
-      /**
-       * Global 변수 이름으로 값을 찾는다.
-       * *******
-       */
-      getGlobalValue: function(name) {
-        return this.get('globals.' + name);
-      },
-      /**
-       * When load base url check it is '' or not
-       * *******
-       */
-      _onBaseUrlLoad: function(){
-        if(this.globals.baseUrl=='')this.set('globals.baseUrl', location.origin + '/rest');
-      },
-      /**
-       * When load ws url check it is '' or not
-       */
-      _onWsUrlLoad: function(){
-        if(this.globals.wsUrl=='')this.set('globals.wsUrl', location.origin + '/elidom/stomp');
-      },
-      /**
-       * Base URL이 아직 설정하지 않 되었을 경우 경고 메시지와 함께 Setting 창을 띄운다.
-       */
-      _onBaseUrlEmpty: function() {
-        this.set('globals.baseUrl', location.origin + '/rest');
-        if(this.devMode){
-          this.open();
-        }
-      },
+	<script>
+		Polymer({
+			is: 'things-setting',
 
-      _onUserEmpty: function(event){
-        this.$['current-user'].generateRequest();
-      },
-      _onWsUrlEmpty: function() {
-        this.set('globals.wsUrl', location.origin + '/elidom/stomp');
-        if(this.devMode){
-          this.open();
-        }
-      },
-      _onAgentUrlEmpty: function(){
-        this.set('globals.printAgentUrl','http://localhost:9010');
-      },
-      // _onLocaleEmpty: function(event){
-      //   var language = navigator.language;
-      //   if(language.indexOf('ko') >= 0) {
-      //     this.globals.locale = 'ko-KR';
-      //   } else if (language.indexOf('en') >= 0) {
-      //     this.globals.locale = 'en-US';
-      //   } else if (language.indexOf('zh') >= 0) {
-      //     this.globals.locale = 'zh-CN';
-      //   } else {
-      //     this.globals.locale = 'en-US';
-      //   }
+			behaviors: [
+				Things.GlobalBehavior,
+				Things.MsgBoxBehavior
+			],
 
-      // },
-      /**
-       * Setting Dialog를 오픈한다.
-       * *******
-       */
-      open: function() {
-        this.$.dialog.open()
-      }
-    });
-  </script>
+			properties: {
+				/**
+				 * 기본 Language가 설정되지 않았을 경우 defaultLanguage를 설정한다.
+				 * ********
+				 * @type {String}
+				 */
+				defaultLocale: {
+					type: String,
+					value: 'en-US'
+				},
+
+				/**
+				 * license reference URL
+				 * ******
+				 * @type {String}
+				 */
+				licenseRefUrl: {
+					type: String,
+					value: 'http://license.hatiolab.com/references/things-factory/'
+				}
+			},
+
+			/**
+			 * Ready
+			 * *******
+			 */
+			ready: function() {
+				this.devMode = location.href.indexOf('localhost') >= 0;
+			},
+
+			/**
+			 * Global 변수 이름으로 값을 찾는다.
+			 * *******
+			 * @param {String} name
+			 */
+			getGlobalValue: function(name) {
+				return this.get('globals.' + name);
+			},
+
+			/**
+			 * Base URL 값을 Storage에서 로드했을 때 : 빈 값이면 기본값을 설정한다. 
+			 * *******
+			 */
+			_onBaseUrlLoad: function() {
+				if(this.globals.baseUrl == '') {
+					this.set('globals.baseUrl', location.origin + '/rest');
+				}
+			},
+
+			/**
+			 * WS URL 값을 Storage에서 로드했을 때 : 빈 값이면 기본값을 설정한다. 
+			 * *******
+			 */
+			_onWsUrlLoad: function() {
+				if(this.globals.wsUrl == '') {
+					this.set('globals.wsUrl', location.origin + '/elidom/stomp');
+				}
+			},
+
+			/**
+			 * Base URL이 아직 설정되지 않았을 때 빈 값이면 : 경고 메시지와 함께 Setting 창을 띄운다.
+			 */
+			_onBaseUrlEmpty: function() {
+				this.set('globals.baseUrl', location.origin + '/rest');
+
+				if(this.devMode) {
+					this.open();
+				}
+			},
+
+			/**
+			 * WS URL 값을 Storage에서 로드했을 때 빈 값이면 : 기본값을 설정한다. 
+			 * *******
+			 * @param {Object} event
+			 */
+			_onUserEmpty: function(event) {
+				this.$['current-user'].generateRequest();
+			},
+
+			/**
+			 * WS URL 값을 Storage에서 로드했는데 빈 값이면 : 기본값을 설정한다. 
+			 * *******
+			 */
+			_onWsUrlEmpty: function() {
+				this.set('globals.wsUrl', location.origin + '/elidom/stomp');
+
+				if(this.devMode) {
+					this.open();
+				}
+			},
+
+			/**
+			 * WS URL 값을 Storage에서 로드했을 때 빈 값이면 : 기본값을 설정한다. 
+			 * *******
+			 */
+			_onAgentUrlEmpty: function() {
+				this.set('globals.printAgentUrl', 'http://localhost:9010');
+			},
+
+			/**
+			 * Setting Dialog를 오픈한다.
+			 * *******
+			 */
+			open: function() {
+				this.$.dialog.open()
+			}
+		});
+	</script>
 </dom-module>

@@ -10,93 +10,116 @@ Copyright © HatioLab Inc. All rights reserved.
 
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
-<link rel="import" href="../things-resource-combo/things-locale-combo.html">
-<link rel="import" href="../things-resource-combo/things-menu-combo.html">
+<!--
+	설정 다이얼로그 
+-->
 
 <dom-module id="things-setting-dialog">
-  <template>
-    <style include="paper-dialog-shared-styles">
-    h2{
-      padding-top:20px;
-      text-transform: capitalize;
-    }
-    paper-button{
-      @apply(--things-button)
-    }
-    paper-button[autofocus]{
-      @apply(--things-button-important)
-    }
-    .half-width{
-      min-width:35% !important;
-    }
-    .buttons{
-      padding-right:20px
-    }
-    </style>
+	<template>
+		<style include="paper-dialog-shared-styles">
+			h2{
+				padding-top:20px;
+				text-transform: capitalize;
+			}
+			paper-button{
+				@apply(--things-button)
+			}
+			paper-button[autofocus]{
+				@apply(--things-button-important)
+			}
+			.half-width{
+				min-width:35% !important;
+			}
+			.buttons{
+				padding-right:20px
+			}
+			.copyright{
+				background-color:#f1f1f1;
+				border-top:1px solid #ccc;
+				margin-bottom:0;padding:5px 20px;
+				font-size:12px;
+			}
+			.copyright div{
+				float:right
+			}
+			.copyright div a{
+				text-decoration:underline;
+				color:var(--things-focus-background-color);
+				font-weight:bold;
+				cursor:pointer;
+			}
+		</style>
 
-    <h2><things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg></h2>
-    <!-- Base URL -->
-    <paper-input
-      label="Base URL (ex: http://www.elidom.xyz/rest)"
-      value="{{globals.baseUrl::change}}" autoValidate required hidden$=[[!devMode]]>
-    </paper-input>
+		<h2>
+			<things-i18n-msg auto msgid="button.setting">Setting</things-i18n-msg>
+		</h2>
 
-    <!-- Web Socket URL -->
-    <paper-input
-      id="ws-url"
-      label="Web Socket URL"
-      value="{{globals.wsUrl::change}}" hidden$=[[!devMode]]>
-    </paper-input>
-    <!-- lite dom -->
-    <content></content>
-    <!-- locale selector -->
-    <!--things-locale-combo
-      id="locale-selector"
-      storage-name="setting.locale"
-      default-locale="{{defaultLocale}}"
-      selected-locale="{{globals.locale}}">
-    </things-locale-combo-->
+		<!-- Base URL -->
+		<paper-input
+			label="Base URL (ex: http://www.elidom.xyz/rest)"
+			value="{{globals.baseUrl::change}}" 
+			autoValidate 
+			required 
+			hidden$=[[!devMode]]>
+		</paper-input>
 
-    <div class="buttons">
-      <paper-button dialog-confirm autofocus><things-i18n-msg msgid="button.confirm" auto>Confirm</things-i18n-msg></paper-button>
-    </div>
-  </template>
+		<!-- Web Socket URL -->
+		<paper-input
+			id="ws-url"
+			label="Web Socket URL"
+			value="{{globals.wsUrl::change}}" 
+			hidden$=[[!devMode]]>
+		</paper-input>
+		
+		<!-- lite dom -->
+		<content></content>
+		
+		<!-- buttons -->
+		<div class="buttons">
+			<paper-button dialog-confirm autofocus>
+				<things-i18n-msg msgid="button.confirm" auto>Confirm</things-i18n-msg>
+			</paper-button>
+		</div>
 
-  <script>
-    Polymer({
-      is: 'things-setting-dialog',
-      properties:{
-        /**
-         * devMode
-         * ******
-         * @type {Boolean}
-         */
-        devMode:{
-          type: Boolean,
-          value: false
-        },
+		<!-- License Report -->
+		<div class="copyright">
+			© <strong>HatioLab Inc.</strong>
+			<div>
+				Things system is built on several 
+				<a href="[[licenseRefUrl]]" target='_blank'>open source software</a>
+			</div>
+		</div>
+	</template>
 
-        // defaultLocale: {
-        //   type: String,
-        //   value: function() {
-        //     var language = navigator.language;
-        //     if(language.indexOf('ko') == 0) {
-        //       return 'ko-KR';
-        //     } else if (language.indexOf('en') == 0) {
-        //       return 'en-US';
-        //     } else if (language.indexOf('zh') == 0) {
-        //       return 'zh-CN';
-        //     } else {
-        //       return 'en-US';
-        //     }
-        //   }
-        // }
-      },
+	<script>
+		Polymer({
+			is: 'things-setting-dialog',
 
-      behaviors: [
-        Polymer.PaperDialogBehavior,
-        Things.GlobalBehavior
-      ]
-    });
-  </script>
+			behaviors: [
+				Polymer.PaperDialogBehavior,
+				Things.GlobalBehavior
+			],
+
+			properties: {
+				/**
+				 * 개발자 모드 
+				 * ******
+				 * @type {Boolean}
+				 */
+				devMode: {
+					type: Boolean,
+					value: false
+				},
+
+				/**
+				 * license reference URL
+				 * ******
+				 * @type {String}
+				 */
+				licenseRefUrl: {
+					type: String
+				}
+			}
+		});
+	</script>
 </dom-module>
