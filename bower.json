@@ -1,6 +1,6 @@
 {
   "name": "things-setting",
-  "version": "v2.1.1",
+  "version": "v2.2.0",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -11,8 +11,8 @@
     "seed"
   ],
   "main": "things-setting.html",
-  "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/ThingsElements/seed-element/",
+  "license": "http://license.hatiolab.com/EULA",
+  "homepage": "http://elements.hatiolab.com/",
   "ignore": [
     "/.*",
     "/test/"
@@ -23,7 +23,7 @@
     "things-msg-box-behavior": "ThingsElements/things-msg-box-behavior",
     "things-global-behavior": "ThingsElements/things-global-behavior",
     "paper-dialog-behavior": "^1.2.5",
-    "paper-tooltip":"^1.1.2",
+    "paper-tooltip": "^1.1.2",
     "paper-input": "^1.1.11",
     "things-resource-combo": "ThingsElements/things-resource-combo",
     "things-i18n-msg": "ThingsElements/things-i18n-msg"
