@@ -17,21 +17,31 @@ Copyright © HatioLab Inc. All rights reserved.
 <dom-module id="things-setting-dialog">
 	<template>
 		<style include="paper-dialog-shared-styles">
+			:host > * {
+				margin-top: 20px;
+				padding: 0 24px;
+			}
 			h2{
 				padding-top:20px;
 				text-transform: capitalize;
 			}
 			paper-button{
-				@apply(--things-button)
+				@apply --things-button;
+
 			}
 			paper-button[autofocus]{
-				@apply(--things-button-important)
+				@apply --things-button-important;
+			}
+			.buttons{
+				position: relative;
+        		padding: 8px 8px 8px 24px;
+       			margin: 0;
+				color: var(--paper-dialog-button-color, --primary-color);
+				@apply --layout-horizontal;
+        		@apply --layout-end-justified;
 			}
 			.half-width{
 				min-width:35% !important;
-			}
-			.buttons{
-				padding-right:20px
 			}
 			.copyright{
 				background-color:#f1f1f1;
