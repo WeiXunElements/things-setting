@@ -30,13 +30,14 @@ Copyright © HatioLab Inc. All rights reserved.
 	<template>
 		<style>
 			paper-icon-button {
-				@apply(--things-small-icon);
+				@apply --things-small-icon;
 				float:right;
 				margin-top:1px;margin-right:22px;
 			}
 			things-setting-dialog {
 				min-width:500px;
 			}
+			
 		</style>
 
 		<!-- setting dialog -->
@@ -205,7 +206,14 @@ Copyright © HatioLab Inc. All rights reserved.
 			 */
 			open: function() {
 				this.$.dialog.open()
-			}
+			},
+
+			attached: function() {
+				//상단의 iron-icon 색상 바꿔주기 
+				var findIconRoot = this.$$('paper-icon-button');
+				var findIcon = findIconRoot.$$('iron-icon');
+				findIcon.style['fill'] = '#8cc9e7';
+     		}	
 		});
 	</script>
 </dom-module>
