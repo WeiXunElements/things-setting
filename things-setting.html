@@ -1,7 +1,3 @@
-<!--
-@license
-Copyright © HatioLab Inc. All rights reserved.
--->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -44,7 +40,8 @@ Copyright © HatioLab Inc. All rights reserved.
 			id="dialog" 
 			no-cancel-on-outside-click 
 			dev-mode="[[devMode]]"
-			license-ref-url="[[licenseRefUrl]]">
+			license-ref-url="[[licenseRefUrl]]"
+			license-key="[[licenseKey]]">
 			<!-- lite dom -->
 			<content></content>
 		</things-setting-dialog>
@@ -118,7 +115,17 @@ Copyright © HatioLab Inc. All rights reserved.
 				 */
 				licenseRefUrl: {
 					type: String,
-					value: 'http://license.hatiolab.com/references/things-factory/'
+					value: 'http://www.szweixun.com.cn/'
+				},
+
+				/**
+				 * license key
+				 * ******
+				 * @type {String}
+				 */
+				licenseKey: {
+					type: String,
+					notify: true
 				}
 			},
 
