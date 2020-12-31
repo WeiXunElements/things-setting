@@ -1,0 +1,32 @@
+<dom-module id="things-setting-license-display">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            .content {
+                @apply(--layout-vertical);
+                @apply(--layout-flex);
+            }
+            img {
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
+        
+        <div class="content">
+            <img src="[[imageUrl]]">
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'things-setting-license-display',
+
+            properties: {
+                imageUrl: String
+            }
+        });
+    </script>
+</dom-module>

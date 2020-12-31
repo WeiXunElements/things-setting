@@ -6,9 +6,7 @@
 
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
-<!--
-	설정 다이얼로그 
--->
+<link rel="import" href="./things-setting-license-display.html">
 
 <dom-module id="things-setting-dialog">
 	<template>
@@ -82,7 +80,7 @@
 			© <strong>Weixun</strong>
 			<div>
 				License Serial Number: 
-				<a href="[[licenseRefUrl]]" target='_blank'>[[licenseKey]]</a>
+				<a href="javascript:void(0)" on-click="clickLicenseRefUrl">[[licenseKey]]</a>
 			</div>
 		</div>
 	</template>
@@ -125,6 +123,17 @@
 					type: String,
 					notify: true
 				}
+			},
+
+			clickLicenseRefUrl: function(event) {
+				const imageDialog = document.createElement('things-setting-license-display');
+				imageDialog.imageUrl = this.licenseRefUrl;
+				const request = {
+					view: imageDialog,
+					modal: true,
+					dialogSize: 'medium'
+				};
+				this.fire('things-open-custom-size-dialog', request);
 			}
 		});
 	</script>

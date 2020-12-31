@@ -115,7 +115,9 @@
 				 */
 				licenseRefUrl: {
 					type: String,
-					value: 'http://www.szweixun.com.cn/'
+					value: function() {
+						return `${window.location.origin}/images/license.jpg`
+					}
 				},
 
 				/**
